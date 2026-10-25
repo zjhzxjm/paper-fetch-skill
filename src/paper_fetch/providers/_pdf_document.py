@@ -11,8 +11,14 @@ def non_article_pdf_reason(url: str, *, label: str = "") -> str | None:
     if re.search(r"/(?:previewpdf|pdfpreview)(?:/|$)", path):
         return "pdf_preview_only"
     if (
-        re.search(r"/(?:suppl_file|supplementary|supplements?)(?:/|$)", path)
-        or re.search(r"(?:_moesm\d*_|_esm\.pdf$)", path)
+        re.search(
+            r"/(?:suppl_file|suppl|supinfo|article-supplement|supplementary|supplements?)(?:/|$)",
+            path,
+        )
+        or re.search(
+            r"(?:_moesm\d*_|_esm\.pdf$|(?:^|[/_-])(?:si[_-]|sup[-_])\d+(?:[/.]|$))",
+            path,
+        )
         or re.search(
             r"\b(?:supplementary|supplemental|supporting)\s+(?:information|material|data|file)",
             label,
